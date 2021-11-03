@@ -1,0 +1,5 @@
+﻿  dstr-assignment.cpp
+C:\Users\Sydne\source\repos\dstr-assignment\dstr-assignment\dstr-assignment.cpp(331,11): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\Sydne\source\repos\dstr-assignment\dstr-assignment\dstr-assignment.cpp(408,12): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\Sydne\source\repos\dstr-assignment\dstr-assignment\dstr-assignment.cpp(339,6): warning C4101: 'order': unreferenced local variable
+  dstr-assignment.vcxproj -> C:\Users\Sydne\source\repos\dstr-assignment\Debug\dstr-assignment.exe
