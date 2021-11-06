@@ -13,6 +13,7 @@ time_t timeArrived;
 unsigned int size = 26;
 char str[80];
 bool valid;
+int typedetail = 0;
 
 struct Patient {
 	string id;
@@ -36,7 +37,7 @@ struct Waiting {
 	string medicine;
 	string sortItem;
 	Waiting* next;
-} *waitingHead, * waitingCurrent, * waitingNewNode, * waitingSortHead, * waitingTempCurrent;
+} *waitHead, * waitCurrent, * waitNewNode, * waitSorted, * waitTemp;
 
 struct History {
 	string id;
@@ -49,8 +50,9 @@ struct History {
 	string sortItem;
 	History* next;
 	History* previous;
-} *historyHead, * historyTail, * historyCurrent, * historyNewNode, * historySortHead, * historyTempCurrent;
+} *historyHead, * historyTail, * historyCurrent, * historyNewNode, * historySortHead, * historySortTail, * historyTemp;
 
+//Insert Hard Code Function
 void addtoPatient()
 {
 	if (patientHead == NULL)
@@ -64,9 +66,50 @@ void addtoPatient()
 		patientTail = patientNewNode;
 		patientCurrent = patientHead;
 	}
+}
 
-	//id generation
-	total++;
+void matchtoPatient(string PatientID) {
+	if (patientHead->id != PatientID) {
+		patientCurrent = patientHead;
+		while (patientCurrent != NULL) {
+			if (patientCurrent->id == PatientID) {
+				if (::typedetail == 1) {
+					waitNewNode->patient = patientCurrent;
+				}
+				else {
+					historyNewNode->patient = patientCurrent;
+				}
+				return;
+			}
+			patientCurrent = patientCurrent->next;
+		}
+	}
+	else {
+		if (::typedetail == 1) {
+			waitNewNode->patient = patientHead;
+		}
+		else {
+			historyNewNode->patient = patientHead;
+		}
+
+	}
+}
+
+void addtoWaiting()
+{
+	if (waitHead == NULL)
+	{
+		waitHead = waitNewNode;
+	}
+	else
+	{
+		waitCurrent = waitHead;
+		while (waitCurrent->next != NULL)
+		{
+			waitCurrent = waitCurrent->next;
+		}
+		waitCurrent->next = waitNewNode;
+	}
 }
 
 void addtoHistory() {
@@ -76,47 +119,12 @@ void addtoHistory() {
 	}
 	else
 	{
-		historyCurrent = historyHead;
-		historyTail->next = historyNewNode;
 		historyNewNode->previous = historyTail;
+		historyTail->next = historyNewNode;
 		historyTail = historyNewNode;
+		historyCurrent = historyHead;
 	}
 }
-
-void addtoWaiting()
-{
-	if (waitingHead == NULL)
-	{
-		waitingHead = waitingNewNode;
-	}
-	else
-	{
-		waitingCurrent = waitingHead;
-		while (waitingCurrent->next != NULL)
-		{
-			waitingCurrent = waitingCurrent->next;
-		}
-		waitingCurrent->next = waitingNewNode;
-	}
-
-	cout << "\nPatient added to Waiting List!" << endl;
-}
-
-//void matchtoPatient(string PatientID) {
-//	if (patientHead->id != PatientID) {
-//		patientCurrent = patientHead;
-//		while (patientCurrent != NULL) {
-//			if (patientCurrent->id == PatientID) {
-//				waitingNewNode->patient = patientCurrent;
-//				return;
-//			}
-//			patientCurrent = patientCurrent->next;
-//		}
-//	}
-//	else {
-//		waitingNewNode->patient = patientHead;
-//	}
-//}
 
 void HardCode() {
 	//Hard Code of Patient Record
@@ -127,8 +135,8 @@ void HardCode() {
 	patientNewNode->firstname = "Vivian";
 	patientNewNode->lastname = "Fong";
 	patientNewNode->age = 24;
-	patientNewNode->gender = "F";
-	patientNewNode->contact = "0123456789";
+	patientNewNode->gender = "Female";
+	patientNewNode->contact = "060123456789";
 	patientNewNode->address = "4, Jalan Bunga, Taman Bunga, 48793 Malaysia";
 	patientNewNode->next = NULL;
 	patientNewNode->previous = NULL;
@@ -139,8 +147,8 @@ void HardCode() {
 	patientNewNode->firstname = "James";
 	patientNewNode->lastname = "Pang";
 	patientNewNode->age = 34;
-	patientNewNode->gender = "M";
-	patientNewNode->contact = "0123464789";
+	patientNewNode->gender = "Male";
+	patientNewNode->contact = "060123464789";
 	patientNewNode->address = "54, Jalan Bunga, Taman Bunga, 48793 Malaysia";
 	patientNewNode->next = NULL;
 	patientNewNode->previous = NULL;
@@ -151,8 +159,8 @@ void HardCode() {
 	patientNewNode->firstname = "Isabella";
 	patientNewNode->lastname = "Ng";
 	patientNewNode->age = 65;
-	patientNewNode->gender = "F";
-	patientNewNode->contact = "0123376789";
+	patientNewNode->gender = "Female";
+	patientNewNode->contact = "060123376789";
 	patientNewNode->address = "24, Jalan Bunga, Taman Bunga, 48793 Malaysia";
 	patientNewNode->next = NULL;
 	patientNewNode->previous = NULL;
@@ -163,150 +171,142 @@ void HardCode() {
 	patientNewNode->firstname = "Charlotte";
 	patientNewNode->lastname = "Ng";
 	patientNewNode->age = 14;
-	patientNewNode->gender = "F";
-	patientNewNode->contact = "0123153789";
+	patientNewNode->gender = "Female";
+	patientNewNode->contact = "060123153789";
 	patientNewNode->address = "16, Jalan Bunga, Taman Bunga, 48793 Malaysia";
 	patientNewNode->next = NULL;
 	patientNewNode->previous = NULL;
 	addtoPatient();
 
-	patientNewNode = new Patient;
-	patientNewNode->id = "P0005";
-	patientNewNode->firstname = "Emily";
-	patientNewNode->lastname = "Kong";
-	patientNewNode->age = 63;
-	patientNewNode->gender = "F";
-	patientNewNode->contact = "012373290";
-	patientNewNode->address = "54, Jalan Lily, Taman Bunga, 48793 Malaysia";
-	patientNewNode->next = NULL;
-	patientNewNode->previous = NULL;
-	addtoPatient();
+	//Hard Code of Waiting List Record
+	::typedetail = 1;
+	waitHead = waitCurrent = NULL;
+	waitNewNode = new Waiting;
+	waitNewNode->order = 1;
+	waitNewNode->doctor = "";
+	waitNewNode->timeArrived = 1620021717;
+	waitNewNode->sickness = "Vomit";
+	waitNewNode->disability = false;
+	waitNewNode->medicine = "Kaopectate";
+	waitNewNode->sortItem = "";
+	waitNewNode->next = NULL;
+	matchtoPatient("P0001");
+	addtoWaiting();
 
-	patientNewNode = new Patient;
-	patientNewNode->id = "P0006";
-	patientNewNode->firstname = "Ahmad";
-	patientNewNode->lastname = "Abdullah";
-	patientNewNode->age = 38;
-	patientNewNode->gender = "M";
-	patientNewNode->contact = "0123456789";
-	patientNewNode->address = "4, Jalan Bunga, Taman Bunga, 48793 Malaysia";
-	patientNewNode->next = NULL;
-	patientNewNode->previous = NULL;
-	addtoPatient();
+	waitNewNode = new Waiting;
+	waitNewNode->order = 2;
+	waitNewNode->doctor = "";
+	waitNewNode->timeArrived = 1620022347;
+	waitNewNode->sickness = "Head Pain";
+	waitNewNode->disability = false;
+	waitNewNode->medicine = "";
+	waitNewNode->sortItem = "";
+	waitNewNode->next = NULL;
+	matchtoPatient("P0002");
+	addtoWaiting();
 
-	patientNewNode = new Patient;
-	patientNewNode->id = "P0007";
-	patientNewNode->firstname = "Boey";
-	patientNewNode->lastname = "Choo";
-	patientNewNode->age = 72;
-	patientNewNode->gender = "M";
-	patientNewNode->contact = "0195678923";
-	patientNewNode->address = "2-4-1, Jalil Condo, Taman Bangsa, 48329 Malaysia";
-	patientNewNode->next = NULL;
-	patientNewNode->previous = NULL;
-	addtoPatient();
+	waitNewNode = new Waiting;
+	waitNewNode->order = 3;
+	waitNewNode->doctor = "";
+	waitNewNode->timeArrived = 1620026537;
+	waitNewNode->sickness = "Stomach Pain";
+	waitNewNode->disability = false;
+	waitNewNode->medicine = "";
+	waitNewNode->sortItem = "";
+	waitNewNode->next = NULL;
+	matchtoPatient("P0003");
+	addtoWaiting();
 
-	patientNewNode = new Patient;
-	patientNewNode->id = "P0008";
-	patientNewNode->firstname = "Muthu";
-	patientNewNode->lastname = "Sivanathan";
-	patientNewNode->age = 29;
-	patientNewNode->gender = "M";
-	patientNewNode->contact = "0167834988";
-	patientNewNode->address = "N-7-5, Damai Apartments, Taman Bangsa, 48340 Malaysia";
-	patientNewNode->next = NULL;
-	patientNewNode->previous = NULL;
-	addtoPatient();
+	waitNewNode = new Waiting;
+	waitNewNode->order = 4;
+	waitNewNode->doctor = "";
+	waitNewNode->timeArrived = 1620027527;
+	waitNewNode->sickness = "Cough";
+	waitNewNode->disability = true;
+	waitNewNode->medicine = "";
+	waitNewNode->sortItem = "";
+	waitNewNode->next = NULL;
+	matchtoPatient("P0004");
+	addtoWaiting();
 
-	patientNewNode = new Patient;
-	patientNewNode->id = "P0009";
-	patientNewNode->firstname = "Jaemin";
-	patientNewNode->lastname = "Kim";
-	patientNewNode->age = 20;
-	patientNewNode->gender = "M";
-	patientNewNode->contact = "0154793216";
-	patientNewNode->address = "54, Jalan Oversea, Taman Endah, 53700 Malaysia";
-	patientNewNode->next = NULL;
-	patientNewNode->previous = NULL;
-	addtoPatient();
-
-	patientNewNode = new Patient;
-	patientNewNode->id = "P0010";
-	patientNewNode->firstname = "Jenny";
-	patientNewNode->lastname = "Lee";
-	patientNewNode->age = 28;
-	patientNewNode->gender = "F";
-	patientNewNode->contact = "0123456789";
-	patientNewNode->address = "24, Jalan Jalil, Taman Puncak, 49450 Malaysia";
-	patientNewNode->next = NULL;
-	patientNewNode->previous = NULL;
-	addtoPatient();
+	waitNewNode = new Waiting;
+	waitNewNode->order = 5;
+	waitNewNode->doctor = "";
+	waitNewNode->timeArrived = 1620108117;
+	waitNewNode->sickness = "Vomit";
+	waitNewNode->disability = false;
+	waitNewNode->medicine = "";
+	waitNewNode->sortItem = "";
+	waitNewNode->next = NULL;
+	matchtoPatient("P0002");
+	addtoWaiting();
 
 	//Hard Code of History List Record
+	::typedetail = 2;
 	historyHead = historyCurrent = NULL;
 	historyNewNode = new History;
-	historyNewNode->id = "P0001";
-	historyNewNode->patient;
+	historyNewNode->id = "H0001";
 	historyNewNode->doctor = "Dr. Tan";
-	historyNewNode->timeVisited = 1620021717;
+	historyNewNode->timeVisited = 1620023517;
 	historyNewNode->sickness = "Vomit";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "Kaopectate";
 	historyNewNode->sortItem = "";
 	historyNewNode->next = NULL;
-	//matchtoPatient("P0001");
+	historyNewNode->previous = NULL;
+	matchtoPatient("P0001");
 	addtoHistory();
 
 	historyNewNode = new History;
-	historyNewNode->id = "P0002";
-	historyNewNode->patient;
+	historyNewNode->id = "H0002";
 	historyNewNode->doctor = "Dr. Wong";
-	historyNewNode->timeVisited = 1620022347;
+	historyNewNode->timeVisited = 1620024147;
 	historyNewNode->sickness = "Head Pain";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "Kaopectate";
 	historyNewNode->sortItem = "";
 	historyNewNode->next = NULL;
-	//matchtoPatient("P0002");
+	historyNewNode->previous = NULL;
+	matchtoPatient("P0002");
 	addtoHistory();
 
 	historyNewNode = new History;
-	historyNewNode->id = "P0003";
-	historyNewNode->patient;
+	historyNewNode->id = "H0003";
 	historyNewNode->doctor = "Dr. Tan";
-	historyNewNode->timeVisited = 1620026537;
+	historyNewNode->timeVisited = 1620028337;
 	historyNewNode->sickness = "Stomach Pain";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "3";
 	historyNewNode->sortItem = "";
 	historyNewNode->next = NULL;
-	//matchtoPatient("P0003");
+	historyNewNode->previous = NULL;
+	matchtoPatient("P0003");
 	addtoHistory();
 
 	historyNewNode = new History;
-	historyNewNode->id = "P0004";
-	historyNewNode->patient;
+	historyNewNode->id = "H0004";
 	historyNewNode->doctor = "Dr. Wong";
-	historyNewNode->timeVisited = 1620027527;
+	historyNewNode->timeVisited = 1620029327;
 	historyNewNode->sickness = "Cough";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "4";
 	historyNewNode->sortItem = "";
 	historyNewNode->next = NULL;
-	//matchtoPatient("P0004");
+	historyNewNode->previous = NULL;
+	matchtoPatient("P0004");
 	addtoHistory();
 
 	historyNewNode = new History;
-	historyNewNode->id = "P0002";
-	historyNewNode->patient;
+	historyNewNode->id = "H0005";
 	historyNewNode->doctor = "Dr. Tan";
-	historyNewNode->timeVisited = 1620108117;
+	historyNewNode->timeVisited = 1620109917;
 	historyNewNode->sickness = "Vomit";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "5";
 	historyNewNode->sortItem = "";
 	historyNewNode->next = NULL;
-	//matchtoPatient("P0002");
+	historyNewNode->previous = NULL;
+	matchtoPatient("P0002");
 	addtoHistory();
 }
 
@@ -429,16 +429,16 @@ void InsertintoWaitingList()
 		addtoPatient();
 
 		//creating new waiting node
-		waitingNewNode = new Waiting;
-		waitingNewNode->order = total;
-		waitingNewNode->patient = patientNewNode;
-		waitingNewNode->doctor = "";
-		waitingNewNode->timeArrived = timeArrived;
-		waitingNewNode->sickness = sickness;
-		waitingNewNode->disability = disability;
-		waitingNewNode->medicine = "";
-		waitingNewNode->sortItem = "";
-		waitingNewNode->next = NULL;
+		waitNewNode = new Waiting;
+		waitNewNode->order = total;
+		waitNewNode->patient = patientNewNode;
+		waitNewNode->doctor = "";
+		waitNewNode->timeArrived = timeArrived;
+		waitNewNode->sickness = sickness;
+		waitNewNode->disability = disability;
+		waitNewNode->medicine = "";
+		waitNewNode->sortItem = "";
+		waitNewNode->next = NULL;
 		addtoWaiting();
 
 	}
@@ -492,16 +492,16 @@ void InsertintoWaitingList()
 				}
 				cin.ignore();
 
-				waitingNewNode = new Waiting;
-				waitingNewNode->order = total;
-				waitingNewNode->patient = patientCurrent;
-				waitingNewNode->doctor = "";
-				waitingNewNode->timeArrived = timeArrived;
-				waitingNewNode->sickness = sickness;
-				waitingNewNode->disability = disability;
-				waitingNewNode->medicine = "";
-				waitingNewNode->sortItem = "";
-				waitingNewNode->next = NULL;
+				waitNewNode = new Waiting;
+				waitNewNode->order = total;
+				waitNewNode->patient = patientCurrent;
+				waitNewNode->doctor = "";
+				waitNewNode->timeArrived = timeArrived;
+				waitNewNode->sickness = sickness;
+				waitNewNode->disability = disability;
+				waitNewNode->medicine = "";
+				waitNewNode->sortItem = "";
+				waitNewNode->next = NULL;
 				addtoWaiting();
 			}
 			else if (select != 1 && select != 2 && select != 0)
@@ -539,14 +539,14 @@ void InsertintoPatientList()
 	timeArrived = time(0);
 
 	historyNewNode = new History;
-	historyNewNode->id = waitingHead->patient->id;
-	historyNewNode->patient = waitingHead->patient;
+	historyNewNode->id = waitHead->patient->id;
+	historyNewNode->patient = waitHead->patient;
 	historyNewNode->doctor = doctor;
 	historyNewNode->timeVisited = timeArrived;
-	historyNewNode->sickness = waitingHead->sickness;
-	historyNewNode->disability = waitingHead->disability;
+	historyNewNode->sickness = waitHead->sickness;
+	historyNewNode->disability = waitHead->disability;
 	historyNewNode->medicine = medicine;
-	historyNewNode->sortItem = waitingHead->sortItem;
+	historyNewNode->sortItem = waitHead->sortItem;
 	historyNewNode->next = NULL;
 	historyNewNode->previous = NULL;
 
@@ -563,9 +563,9 @@ void InsertintoPatientList()
 	}
 
 	//removing waiting list head
-	waitingCurrent = waitingHead;
-	waitingHead = waitingHead->next;
-	delete waitingCurrent;
+	waitCurrent = waitHead;
+	waitHead = waitHead->next;
+	delete waitCurrent;
 
 	cout << "Patient history updated!" << endl;
 	system("pause");
@@ -599,35 +599,35 @@ void tabbing(string text, string text2) {
 
 void display_waiting() {
 	system("cls");
-	waitingCurrent = waitingHead;
+	waitCurrent = waitHead;
 	int i = 1;
-	if (waitingCurrent != NULL) {
+	if (waitCurrent != NULL) {
 		cout << "=====================================================[ Patient waiting list ]====================================================" << endl;
 		cout << "|  No. \t|Patient ID \t|Name \t\t\t|Age \t|Gender |Contact \t|Time Arrived\t|Sickness \t|Disability\t|" << endl;
 		cout << "=================================================================================================================================" << endl;
-		while (waitingCurrent != NULL) {
+		while (waitCurrent != NULL) {
 			cout << "|  " << i << ".\t|";
-			cout << waitingCurrent->patient->id << "\t\t|";
-			cout << waitingCurrent->patient->firstname << " " << waitingCurrent->patient->lastname;
-			tabbing(waitingCurrent->patient->firstname, waitingCurrent->patient->lastname);
-			cout << waitingCurrent->patient->age << "\t|";
-			if (waitingCurrent->patient->gender == "F") {
+			cout << waitCurrent->patient->id << "\t\t|";
+			cout << waitCurrent->patient->firstname << " " << waitCurrent->patient->lastname;
+			tabbing(waitCurrent->patient->firstname, waitCurrent->patient->lastname);
+			cout << waitCurrent->patient->age << "\t|";
+			if (waitCurrent->patient->gender == "F") {
 				cout << "Female" << "\t|";
 			}
 			else {
 				cout << "Male" << "\t|";
 			}
-			cout << waitingCurrent->patient->contact << "\t|";
-			cout << waitingCurrent->timeArrived << "\t|";
-			cout << waitingCurrent->sickness;
-			tabbing(waitingCurrent->sickness, "");
-			if (waitingCurrent->disability == 1) {
+			cout << waitCurrent->patient->contact << "\t|";
+			cout << waitCurrent->timeArrived << "\t|";
+			cout << waitCurrent->sickness;
+			tabbing(waitCurrent->sickness, "");
+			if (waitCurrent->disability == 1) {
 				cout << "Yes" << "      \t|" << endl;
 			}
 			else {
 				cout << "No" << "      \t|" << endl;
 			}
-			waitingCurrent = waitingCurrent->next;
+			waitCurrent = waitCurrent->next;
 			i++;
 		}
 		cout << "=================================================================================================================================" << endl;
@@ -642,22 +642,22 @@ void display(int list) {
 	if (list == 1) {
 		system("cls");
 		cout << "---------------------- [ ";
-		cout << waitingCurrent->patient->firstname << " " << waitingCurrent->patient->lastname;
+		cout << waitCurrent->patient->firstname << " " << waitCurrent->patient->lastname;
 		cout << "'s Info ] ----------------------" << endl << endl;
-		cout << "Patient ID \t: " << waitingCurrent->patient->id << endl;
-		cout << "Name \t\t: " << waitingCurrent->patient->firstname << " " << waitingCurrent->patient->lastname << endl;
-		cout << "Age \t\t: " << waitingCurrent->patient->age << endl;
-		if (waitingCurrent->patient->gender == "F") {
+		cout << "Patient ID \t: " << waitCurrent->patient->id << endl;
+		cout << "Name \t\t: " << waitCurrent->patient->firstname << " " << waitCurrent->patient->lastname << endl;
+		cout << "Age \t\t: " << waitCurrent->patient->age << endl;
+		if (waitCurrent->patient->gender == "F") {
 			cout << "Gender \t\t: Female" << endl;
 		}
 		else {
 			cout << "Gender \t\t: Male" << endl;
 		}
-		cout << "Contact \t: " << waitingCurrent->patient->contact << endl;
-		cout << "Address \t: " << waitingCurrent->patient->address << endl;
-		cout << "Time Arrived \t: " << waitingCurrent->timeArrived << endl;
-		cout << "Sickness \t: " << waitingCurrent->sickness << endl;
-		if (waitingCurrent->disability == 1) {
+		cout << "Contact \t: " << waitCurrent->patient->contact << endl;
+		cout << "Address \t: " << waitCurrent->patient->address << endl;
+		cout << "Time Arrived \t: " << waitCurrent->timeArrived << endl;
+		cout << "Sickness \t: " << waitCurrent->sickness << endl;
+		if (waitCurrent->disability == 1) {
 			cout << "Disability \t: Yes" << endl << endl;
 		}
 		else {
@@ -746,7 +746,7 @@ void display(int list) {
 void search_waiting() {
 	int decision = 1;
 	string id, name;
-	waitingCurrent = waitingHead;
+	waitCurrent = waitHead;
 	while (decision != 0) {
 		system("cls");
 		int found = 0;
@@ -761,39 +761,39 @@ void search_waiting() {
 			cout << "\nPlease enter patient ID: ";
 			cin >> id;
 			cin.ignore();
-			while (waitingCurrent != NULL) {
-				if (id == waitingCurrent->patient->id) {
+			while (waitCurrent != NULL) {
+				if (id == waitCurrent->patient->id) {
 					display(1);
 					found ++;
 					system("pause");
 				}
-				waitingCurrent = waitingCurrent->next;
+				waitCurrent = waitCurrent->next;
 			}
 			if (found == 0) {
 				cout << "Patient does not exist in waiting list" << endl << endl;
 				system("pause");
 			}
-			waitingCurrent = waitingHead;
+			waitCurrent = waitHead;
 		}
 		else if (decision == 2){
 			cout << "\nPlease enter patient name: ";
 			getline(cin, name);
-			while (waitingCurrent != NULL) {
-				string fn = waitingCurrent->patient->firstname;
-				string ln = waitingCurrent->patient->lastname;
-				string fullName = waitingCurrent->patient->firstname + " " + waitingCurrent->patient->lastname;
+			while (waitCurrent != NULL) {
+				string fn = waitCurrent->patient->firstname;
+				string ln = waitCurrent->patient->lastname;
+				string fullName = waitCurrent->patient->firstname + " " + waitCurrent->patient->lastname;
 				if ((name == fn) || (name == ln) || (name == fullName)) {
 					display(1);
 					found++;
 					system("pause");
 				}
-				waitingCurrent = waitingCurrent->next;
+				waitCurrent = waitCurrent->next;
 			}
 			if (found == 0) {
 				cout << "Patient does not exist in waiting list" << endl << endl;
 				system("pause");
 			}
-			waitingCurrent = waitingHead;
+			waitCurrent = waitHead;
 		}
 		else if (decision < 0 || decision >2) {
 			cout << "\nPlease enter given options!" << endl;
@@ -939,6 +939,509 @@ void update_history() {
 	system("cls");
 }
 
+void changePriority() {
+	//Check if the waiting list is empty
+	if (waitHead != NULL)
+	{
+		waitCurrent = waitHead;
+		waitSorted = NULL;
+
+		while (waitCurrent != NULL)
+		{
+			waitNewNode = new Waiting;
+			waitNewNode->order = waitCurrent->order;
+			waitNewNode->patient = waitCurrent->patient;
+			waitNewNode->doctor = waitCurrent->doctor;
+			waitNewNode->timeArrived = waitCurrent->timeArrived;
+			waitNewNode->sickness = waitCurrent->sickness;
+			waitNewNode->disability = waitCurrent->disability;
+			waitNewNode->medicine = waitCurrent->medicine;
+			waitNewNode->sortItem = waitCurrent->sortItem;
+			waitNewNode->next = NULL;
+
+			if (waitSorted == NULL)
+			{
+				waitSorted = waitNewNode;
+			}
+			else if (!waitNewNode->disability)
+			{
+				waitTemp = waitSorted;
+				while (waitTemp->next != NULL)
+				{
+					waitTemp = waitTemp->next;
+				}
+				waitTemp->next = waitNewNode;
+			}
+			else if (!waitSorted->disability)
+			{
+				waitNewNode->next = waitSorted;
+				waitSorted = waitNewNode;
+			}
+			else {
+				Waiting* previous = NULL;
+				waitTemp = waitSorted;
+				while (waitTemp->disability)
+				{
+					previous = waitTemp;
+					waitTemp = waitTemp->next;
+				}
+				previous->next = waitNewNode;
+				waitNewNode->next = waitTemp;
+			}
+			waitCurrent = waitCurrent->next;
+		}
+		waitHead = waitSorted;
+		cout << "Change sucessfully!" << endl << endl;
+	}
+	else
+	{
+		cout << "Waiting List is empty!";
+	}
+}
+
+//Sorting Function
+void setSortingItem(int sortdecision1) {
+	if (user == 1) {
+		waitNewNode->sortItem.clear();
+
+		//User select sort by Patient ID
+		if (sortdecision1 == 1) {
+			waitNewNode->sortItem = waitNewNode->patient->id;
+		}
+		//User select sort by Patient Name
+		else if (sortdecision1 == 2) {
+			waitNewNode->sortItem = waitNewNode->patient->firstname + " " + waitNewNode->patient->lastname;
+		}
+		//User select sort by Time Visited
+		else if (sortdecision1 == 3) {
+			waitNewNode->sortItem = waitNewNode->timeArrived;
+		}
+	}
+	else {
+		historyNewNode->sortItem.clear();
+
+		//User select sort by Patient ID
+		if (sortdecision1 == 1) {
+			historyNewNode->sortItem = historyNewNode->patient->id;
+		}
+		//User select sort by Patient Name
+		else if (sortdecision1 == 2) {
+			historyNewNode->sortItem = historyNewNode->patient->firstname + " " + historyNewNode->patient->lastname;
+		}
+		//User select sort by Time Visited
+		else if (sortdecision1 == 3) {
+			historyNewNode->sortItem = historyNewNode->timeVisited;
+		}
+		//Sickness
+		else if (sortdecision1 == 4) {
+			historyNewNode->sortItem = historyNewNode->sickness;
+		}
+		//Doctor
+		else if (sortdecision1 == 5) {
+			historyNewNode->sortItem = historyNewNode->doctor;
+		}
+	}
+}
+
+void pastingData(int sortdecision2) {
+	//Waiting List
+	if (user == 1) {
+		//Ascending order
+		if (sortdecision2 == 1) {
+			if (waitSorted == NULL) {
+				waitSorted = waitNewNode;
+				return;
+			}
+			else if (waitNewNode->sortItem < waitSorted->sortItem) {
+				waitNewNode->next = waitSorted;
+				waitSorted = waitNewNode;
+				return;
+			}
+			else {
+				Waiting* previous = waitSorted;
+				waitTemp = waitSorted->next;
+
+				while (waitTemp != NULL && waitNewNode->sortItem > waitTemp->sortItem) {
+					previous = waitTemp;
+					waitTemp = waitTemp->next;
+				}
+				previous->next = waitNewNode;
+				waitNewNode->next = waitTemp;
+				return;
+			}
+			return;
+		}
+		//User select sort in descending order
+		else {
+			if (waitSorted == NULL) {
+				waitSorted = waitNewNode;
+			}
+			else if (waitNewNode->sortItem > waitSorted->sortItem) {
+				waitNewNode->next = waitSorted;
+				waitSorted = waitNewNode;
+				return;
+			}
+			else {
+				Waiting* previous = waitSorted;
+				waitTemp = waitSorted->next;
+
+				while (waitTemp != NULL && waitNewNode->sortItem < waitTemp->sortItem) {
+					previous = waitTemp;
+					waitTemp = waitTemp->next;
+				}
+
+				previous->next = waitNewNode;
+				waitNewNode->next = waitTemp;
+				return;
+			}
+			return;
+		}
+	}
+
+	//History List
+	else {
+		//Ascending
+		if (sortdecision2 == 1) {
+			if (historySortHead == NULL) {
+				historySortHead = historySortTail = historyNewNode;
+				return;
+			}
+			else if (historyNewNode->sortItem < historySortHead->sortItem) {
+				historyNewNode->next = historySortHead;
+				historySortHead = historyNewNode;
+			}
+			else if (historyNewNode->sortItem > historySortTail->sortItem) {
+				historySortTail->next = historyNewNode;
+				historyNewNode->previous = historySortTail;
+				historySortTail = historyNewNode;
+			}
+			else {
+				historyTemp = historySortHead->next;
+				while (historyNewNode->sortItem > historyTemp->sortItem) {
+					historyTemp = historyTemp->next;
+				}
+				historyTemp->previous->next = historyNewNode;
+				historyNewNode->previous = historyTemp->previous;
+				historyTemp->previous = historyNewNode;
+				historyNewNode->next = historyTemp;
+			}
+		}
+		//Decending
+		else {
+			if (historySortHead == NULL) {
+				historySortHead = historySortTail = historyNewNode;
+				return;
+			}
+			else if (historyNewNode->sortItem > historySortHead->sortItem) {
+				historyNewNode->next = historySortHead;
+				historySortHead = historyNewNode;
+			}
+			else if (historyNewNode->sortItem < historySortTail->sortItem) {
+				historySortTail->next = historyNewNode;
+				historyNewNode->previous = historySortTail;
+				historySortTail = historyNewNode;
+			}
+			else {
+				historyTemp = historySortHead->next;
+
+				while (historyNewNode->sortItem < historyTemp->sortItem) {
+					historyTemp = historyTemp->next;
+				}
+
+				historyTemp->previous->next = historyNewNode;
+				historyNewNode->previous = historyTemp->previous;
+				historyTemp->previous = historyNewNode;
+				historyNewNode->next = historyTemp;
+			}
+		}
+	}
+
+	return;
+}
+
+void CreateSortedList(int sortdecision1, int sortdecision2) {
+	if (user == 1) {
+		waitNewNode = new Waiting;
+		waitNewNode->order = waitCurrent->order;
+		waitNewNode->patient = waitCurrent->patient;
+		waitNewNode->doctor = waitCurrent->doctor;
+		waitNewNode->timeArrived = waitCurrent->timeArrived;
+		waitNewNode->sickness = waitCurrent->sickness;
+		waitNewNode->disability = waitCurrent->disability;
+		waitNewNode->medicine = waitCurrent->medicine;
+		waitNewNode->sortItem = waitCurrent->sortItem;
+		waitNewNode->next = NULL;
+	}
+	else {
+		historyNewNode = new History;
+		historyNewNode->id = historyCurrent->id;
+		historyNewNode->patient = historyCurrent->patient;
+		historyNewNode->doctor = historyCurrent->doctor;
+		historyNewNode->timeVisited = historyCurrent->timeVisited;
+		historyNewNode->sickness = historyCurrent->sickness;
+		historyNewNode->disability = historyCurrent->disability;
+		historyNewNode->medicine = historyCurrent->medicine;
+		historyNewNode->sortItem = historyCurrent->sortItem;
+		historyNewNode->next = NULL;
+		historyNewNode->previous = NULL;
+	}
+	setSortingItem(sortdecision1);
+	pastingData(sortdecision2);
+}
+
+void MoveForward() //original printing with page by page
+{
+	if (user == 1) {
+		if (waitCurrent->next != NULL)
+		{
+			waitCurrent = waitCurrent->next;
+		}
+		else
+		{
+			cout << "End of list!" << endl;
+			system("Pause");
+		}
+	}
+	else {
+		if (historyCurrent->next != NULL) {
+			historyCurrent = historyCurrent->next;
+		}
+		else {
+			cout << "End of list!" << endl;
+			system("Pause");
+		}
+	}
+}
+
+void MoveBackward() //reverse printing with page by page
+{
+	if (user == 1) {
+		if (waitCurrent != waitSorted)
+		{
+			waitTemp = waitSorted;
+			while (waitTemp->next != waitCurrent) {
+				waitTemp = waitTemp->next;
+			}
+			waitCurrent = waitTemp;
+		}
+		else
+		{
+			cout << "End of list!" << endl;
+			system("Pause");
+		}
+	}
+	else {
+		if (historyCurrent->previous != NULL) {
+			historyCurrent = historyCurrent->previous;
+		}
+		else {
+			cout << "End of list!" << endl;
+			system("Pause");
+		}
+	}
+}
+
+void DisplayByPage() {
+	if (user == 1) {
+		waitCurrent = waitSorted;
+		int decision = 1;
+
+		while (decision != 3) {
+			system("CLS");
+			cout << "Order\t\t\t: " << waitCurrent->order << endl;
+			time_t now = waitCurrent->timeArrived;
+			tm ltmm;
+			localtime_s(&ltmm, &now);
+			tm* ltm = &ltmm;
+
+			string datetime = to_string(1900 + ltm->tm_year) + "-" +
+				to_string(1 + ltm->tm_mon) + "-" +
+				to_string(ltm->tm_mday) + " " +
+				to_string(ltm->tm_hour) + ":" +
+				to_string(ltm->tm_min) + ":" +
+				to_string(ltm->tm_sec);
+			cout << "Time Arrived\t\t: " << datetime << endl;
+			cout << "Patient ID\t\t: " << waitCurrent->patient->id << endl;
+			cout << "Patient Firstname\t: " << waitCurrent->patient->firstname << endl;
+			cout << "Patient Lastname\t: " << waitCurrent->patient->lastname << endl;
+			cout << "Sickness\t\t: " << waitCurrent->sickness << endl;
+			cout << "Disability\t\t: " << waitCurrent->disability << endl << endl;
+
+			cout << "1. Next Patient\n2. Previous Patient\n3. Exit Display" << endl;
+			cout << "Enter the selection\t:";
+			cin >> decision;
+			while (cin.fail() || (decision < 1 && decision > 3)) 
+			{
+				cout << "Wrong Input! Kindly insert again!";
+				cout << "1. Next Patient\n2. Previous Patient\n3. Exit Display";
+				cout << "Enter the selection\t:";
+				cin.clear();
+				cin.ignore(256, '\n');
+				cin >> decision;
+			}
+
+			switch (decision)
+			{
+			case 1: MoveForward(); break;
+			case 2: MoveBackward(); break;
+			case 3: cout << "Goodbye!" << endl << endl;
+			}
+		}
+	}
+	else 
+	{
+		historyCurrent = historySortHead;
+		int decision = 1;
+
+		while (decision != 3) 
+		{
+			system("CLS");
+			cout << "History ID\t\t: " << historyCurrent->id << endl;
+			cout << "Patient ID\t\t: " << historyCurrent->patient->id << endl;
+			cout << "Patient Firstname\t: " << historyCurrent->patient->firstname << endl;
+			cout << "Patient Lastname\t: " << historyCurrent->patient->lastname << endl;
+			time_t now = historyCurrent->timeVisited;
+			tm ltmm;
+			localtime_s(&ltmm, &now);
+			tm* ltm = &ltmm;
+			string datetime = to_string(1900 + ltm->tm_year) + "-" +
+				to_string(1 + ltm->tm_mon) + "-" +
+				to_string(ltm->tm_mday) + " " +
+				to_string(ltm->tm_hour) + ":" +
+				to_string(ltm->tm_min) + ":" +
+				to_string(ltm->tm_sec);
+			cout << "Time Visited\t\t: " << datetime << endl;
+			cout << "Doctor\t\t\t: " << historyCurrent->doctor << endl;
+			cout << "Sickness\t\t: " << historyCurrent->sickness << endl;
+			cout << "Disability\t\t: " << historyCurrent->disability << endl;
+			cout << "Medicine\t\t: " << historyCurrent->medicine << endl << endl;
+			cout << "1. Next Patient\n2. Previous Patient\n3. Exit Display" << endl;
+			cout << "Enter the selection\t:";
+			cin >> decision;
+			while (cin.fail() || (decision < 1 && decision > 3)) 
+			{
+				cout << "Wrong Input! Kindly insert again!";
+				cout << "1. Next Patient\n2. Previous Patient\n3. Exit Display";
+				cout << "Enter the selection\t:";
+				cin.clear();
+				cin.ignore(256, '\n');
+				cin >> decision;
+			}
+
+			switch (decision)
+			{
+			case 1: MoveForward(); break;
+			case 2: MoveBackward(); break;
+			case 3: cout << "Goodbye!" << endl << endl;
+			}
+		}
+	}
+
+}
+
+void sortFunction() {
+	int sortdecision1, sortdecision2;
+	if (user == 1) {
+		//Nurse
+
+		//Ask user what they want to sort as
+		cout << "Kindly select one item to sort by: \n1. Patient ID\n2. Patient Name\n3. Time Visited\n4. Exit" << endl;
+		cout << "Enter the selection\t: ";
+		cin >> sortdecision1;
+		while (cin.fail() || (sortdecision1 < 1 && sortdecision1 > 4)) {
+			cout << "Wrong Input! Kindly insert again!" << endl;
+			cout << "Kindly select one item to sort by: \n1. Patient ID\n2. Patient Name\n3. Time Visited\n4. Exit" << endl;
+			cout << "Enter the selection\t:";
+			cin.clear();
+			cin.ignore(256, '\n');
+			cin >> sortdecision1;
+		}
+
+		//Exit sort fucntion if user select 4
+		if (sortdecision1 == 4) {
+			cout << "Exit Sort Function!" << endl;
+			return;
+		}
+
+		cout << endl;
+
+		cout << "Kindly select one item to sort by:\n1. Ascending\n2. Descending" << endl;
+		cout << "Enter the selection\t: ";
+		cin >> sortdecision2;
+		while (cin.fail() || (sortdecision1 < 1 && sortdecision1 > 4)) {
+			cout << "Wrong Input! Kindly insert again!" << endl;
+			cout << "Kindly select one item to sort by: \n1. Patient ID\n2. Patient Name\n3. Time Visited\n4. Exit" << endl;
+			cout << "Enter the selection\t:";
+			cin.clear();
+			cin.ignore(256, '\n');
+			cin >> sortdecision1;
+		}
+
+		//Create the temporarily sort list
+		waitCurrent = waitHead;
+		waitSorted = NULL;
+		while (waitCurrent != NULL) {
+			CreateSortedList(sortdecision1, sortdecision2);
+			waitCurrent = waitCurrent->next;
+		}
+
+		//Display the sort list by page
+		DisplayByPage();
+	}
+	else {
+		//Doctor
+		cout << "Kindly select one item to sort by: \n1. Patient ID\n2. Patient Name\n3. Time Visited\n4. Sickness\n5. Doctor\n6. Exit" << endl;
+		cout << "Enter the selection\t: ";
+		cin >> sortdecision1;
+		while (cin.fail() || (sortdecision1 < 1 && sortdecision1 > 6)) {
+			cout << "Wrong Input! Kindly insert again!" << endl;
+			cout << "Kindly select one item to sort by: \n1. Patient ID\n2. Patient Name\n3. Time Visited\n4. Sickness\n5. Doctor\n6. Exit" << endl;
+			cout << "Enter the selection\t:";
+			cin.clear();
+			cin.ignore(256, '\n');
+			cin >> sortdecision1;
+		}
+
+		//Exit sort fucntion if user select 7
+		if (sortdecision1 == 6) {
+			cout << "Exit Sort Function!" << endl;
+			return;
+		}
+
+		cout << endl;
+
+		cout << "Kindly select one item to sort by:\n1. Ascending\n2. Descending" << endl;
+		cout << "Enter the selection\t: ";
+		cin >> sortdecision2;
+		while (cin.fail() || (sortdecision1 < 1 && sortdecision1 > 6)) {
+			cout << "Wrong Input! Kindly insert again!" << endl;
+			cout << "Kindly select one item to sort by: \n1. Patient ID\n2. Patient Name\n3. Time Visited\n4. Exit" << endl;
+			cout << "Enter the selection\t:";
+			cin.clear();
+			cin.ignore(256, '\n');
+			cin >> sortdecision1;
+		}
+
+		//Create the temporarily sort list
+		historyCurrent = historyHead;
+		historySortHead = NULL;
+		while (historyCurrent != NULL) {
+			CreateSortedList(sortdecision1, sortdecision2);
+			historyCurrent = historyCurrent->next;
+		}
+
+		//Display the sort list by page
+		DisplayByPage();
+	}
+
+	//Delete sort list
+	while (waitSorted != NULL) {
+		waitTemp = waitSorted;
+		waitSorted = waitSorted->next;
+		delete waitTemp;
+	}
+}
+
 void login() {
 	string username = "";
 	string password = "";
@@ -998,7 +1501,7 @@ void MainPage(int user)
 			cout << "3. View all patients on original waiting list" << endl;
 			cout << "4. Call patient to be treated" << endl;
 			cout << "5. Search for patient on waiting list based on Patient ID or Name" << endl;
-			cout << "6. View waiting list in ascending order of visit time" << endl;
+			cout << "6. Sort waiting list" << endl;
 			cout << "0. Logout" << endl;
 			cout << "Enter option (0-6) : ";
 			cin >> choice;
@@ -1021,9 +1524,9 @@ void MainPage(int user)
 			case 1:
 				InsertintoWaitingList();
 				break;
-			/*case 2:
-				sorting_waiting();
-				break; */
+			case 2:
+				changePriority();
+				break; 
 			case 3:
 				display_waiting();
 				break; 
@@ -1033,9 +1536,9 @@ void MainPage(int user)
 			case 5:
 				search_waiting();
 				break;
-				/*	case 6:
-					sorting_waiting();
-					break; */
+			case 6:
+				sortFunction();
+				break;
 			case 0:
 				login();
 			}
@@ -1045,7 +1548,7 @@ void MainPage(int user)
 			cout << "Currently logged in as : Doctor " << endl;
 			cout << "1. View all patients on original waiting list" << endl;
 			cout << "2. Search for patient based on visit history and modify records" << endl;
-			cout << "3. View patient history list in descending order" << endl;
+			cout << "3. Sort history list" << endl;
 			cout << "4. Search for patient based on Sickness or Name" << endl;
 			cout << "0. Logout" << endl;
 			cout << "Enter option (0-4) : ";
@@ -1072,9 +1575,9 @@ void MainPage(int user)
 				case 2:
 				update_history();
 				break;
-			/*case 3:
-				sorting_history();
-				break;*/
+			case 3:
+				sortFunction();
+				break;
 			case 4:
 				search_history();
 				break;
