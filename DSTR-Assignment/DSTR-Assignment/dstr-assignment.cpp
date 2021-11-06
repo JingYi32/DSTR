@@ -99,7 +99,7 @@ void addtoWaiting()
 		waitingCurrent->next = waitingNewNode;
 	}
 
-	cout << "Patient added to Waiting List!" << endl;
+	cout << "\nPatient added to Waiting List!" << endl;
 }
 
 //void matchtoPatient(string PatientID) {
@@ -403,7 +403,7 @@ void InsertintoWaitingList()
 		cout << str;
 		cout << "Sickness : ";
 		getline(cin, sickness);
-		validate(sickness);
+		//validate(sickness);
 		cout << "Disability ('1' - Yes / '0' - No) : ";
 		cin >> disability;
 		while (cin.fail())
@@ -480,7 +480,7 @@ void InsertintoWaitingList()
 				cout << str;
 				cout << "Sickness : ";
 				getline(cin, sickness);
-				validate(sickness);
+				//validate(sickness);
 				cout << "Disability ('1' - Yes / '0' - No) : ";
 				cin >> disability;
 				while (cin.fail())
@@ -502,7 +502,6 @@ void InsertintoWaitingList()
 				waitingNewNode->medicine = "";
 				waitingNewNode->sortItem = "";
 				waitingNewNode->next = NULL;
-				cout << waitingNewNode->sickness;
 				addtoWaiting();
 			}
 			else if (select != 1 && select != 2 && select != 0)
@@ -570,42 +569,415 @@ void InsertintoPatientList()
 
 	cout << "Patient history updated!" << endl;
 	system("pause");
+	system("cls");
 }
 
-void login(int decision)
-{
+void tabbing(string text, string text2) {
+	if (text2 == "") {
+		if (text.size() <= 5) {
+			cout << "\t\t|";
+		}
+		else if (text.size() < 15) {
+			cout << "\t|";
+		}
+		else {
+			cout << "|";
+		}
+	} else {
+		string test = text + text2;
+		if (test.size() <= 5) {
+			cout << "\t\t\t|";
+		}
+		else if (test.size() < 15) {
+			cout << "\t\t|";
+		}
+		else {
+			cout << "\t|";
+		}
+	}
+}
+
+void display_waiting() {
+	system("cls");
+	waitingCurrent = waitingHead;
+	int i = 1;
+	if (waitingCurrent != NULL) {
+		cout << "=====================================================[ Patient waiting list ]====================================================" << endl;
+		cout << "|  No. \t|Patient ID \t|Name \t\t\t|Age \t|Gender |Contact \t|Time Arrived\t|Sickness \t|Disability\t|" << endl;
+		cout << "=================================================================================================================================" << endl;
+		while (waitingCurrent != NULL) {
+			cout << "|  " << i << ".\t|";
+			cout << waitingCurrent->patient->id << "\t\t|";
+			cout << waitingCurrent->patient->firstname << " " << waitingCurrent->patient->lastname;
+			tabbing(waitingCurrent->patient->firstname, waitingCurrent->patient->lastname);
+			cout << waitingCurrent->patient->age << "\t|";
+			if (waitingCurrent->patient->gender == "F") {
+				cout << "Female" << "\t|";
+			}
+			else {
+				cout << "Male" << "\t|";
+			}
+			cout << waitingCurrent->patient->contact << "\t|";
+			cout << waitingCurrent->timeArrived << "\t|";
+			cout << waitingCurrent->sickness;
+			tabbing(waitingCurrent->sickness, "");
+			if (waitingCurrent->disability == 1) {
+				cout << "Yes" << "      \t|" << endl;
+			}
+			else {
+				cout << "No" << "      \t|" << endl;
+			}
+			waitingCurrent = waitingCurrent->next;
+			i++;
+		}
+		cout << "=================================================================================================================================" << endl;
+	} else {
+		cout << "+-----List is currently empty-----+" << endl << endl;
+	}
+	system("pause");
+	system("cls");
+}
+
+void display(int list) {
+	if (list == 1) {
+		system("cls");
+		cout << "---------------------- [ ";
+		cout << waitingCurrent->patient->firstname << " " << waitingCurrent->patient->lastname;
+		cout << "'s Info ] ----------------------" << endl << endl;
+		cout << "Patient ID \t: " << waitingCurrent->patient->id << endl;
+		cout << "Name \t\t: " << waitingCurrent->patient->firstname << " " << waitingCurrent->patient->lastname << endl;
+		cout << "Age \t\t: " << waitingCurrent->patient->age << endl;
+		if (waitingCurrent->patient->gender == "F") {
+			cout << "Gender \t\t: Female" << endl;
+		}
+		else {
+			cout << "Gender \t\t: Male" << endl;
+		}
+		cout << "Contact \t: " << waitingCurrent->patient->contact << endl;
+		cout << "Address \t: " << waitingCurrent->patient->address << endl;
+		cout << "Time Arrived \t: " << waitingCurrent->timeArrived << endl;
+		cout << "Sickness \t: " << waitingCurrent->sickness << endl;
+		if (waitingCurrent->disability == 1) {
+			cout << "Disability \t: Yes" << endl << endl;
+		}
+		else {
+			cout << "Disability \t: No" << endl << endl;
+		}
+	}
+	else if (list == 2) {
+		system("cls");
+		cout << "---------------------- [ ";
+		cout << historyCurrent->patient->firstname << " " << historyCurrent->patient->lastname;
+		cout << "'s Info ] ----------------------" << endl << endl;
+		cout << "Patient ID \t: " << historyCurrent->patient->id << endl;
+		cout << "Name \t\t: " << historyCurrent->patient->firstname << " " << historyCurrent->patient->lastname << endl;
+		cout << "Age \t\t: " << historyCurrent->patient->age << endl;
+		if (historyCurrent->patient->gender == "F") {
+			cout << "Gender \t\t: Female" << endl;
+		}
+		else {
+			cout << "Gender \t\t: Male" << endl;
+		}
+		cout << "Contact \t: " << historyCurrent->patient->contact << endl;
+		cout << "Address \t: " << historyCurrent->patient->address << endl;
+		cout << "Time Visited \t: " << historyCurrent->timeVisited << endl;
+		cout << "Sickness \t: " << historyCurrent->sickness << endl;
+		if (historyCurrent->disability == 1) {
+			cout << "Disability \t: Yes" << endl << endl;
+		}
+		else {
+			cout << "Disability \t: No" << endl << endl;
+		}
+		cout << "Doctor \t: " << historyCurrent->doctor << endl;
+		cout << "Medicine \t: " << historyCurrent->medicine << endl;
+	}
+	else if (list == 3) {
+		int option = 1;
+		while (option != 0) {
+			system("cls");
+			cout << "---------------------- [ ";
+			cout << historyCurrent->patient->firstname << " " << historyCurrent->patient->lastname;
+			cout << "'s Info ] ----------------------" << endl << endl;
+			cout << "Patient ID \t: " << historyCurrent->patient->id << endl;
+			cout << "Name \t\t: " << historyCurrent->patient->firstname << " " << historyCurrent->patient->lastname << endl;
+			cout << "Age \t\t: " << historyCurrent->patient->age << endl;
+			if (historyCurrent->patient->gender == "F") {
+				cout << "Gender \t\t: Female" << endl;
+			}
+			else {
+				cout << "Gender \t\t: Male" << endl;
+			}
+			cout << "Contact \t: " << historyCurrent->patient->contact << endl;
+			cout << "Address \t: " << historyCurrent->patient->address << endl;
+			cout << "Time Visited \t: " << historyCurrent->timeVisited << endl;
+			cout << "Sickness \t: " << historyCurrent->sickness << endl;
+			if (historyCurrent->disability == 1) {
+				cout << "Disability \t: Yes" << endl << endl;
+			}
+			else {
+				cout << "Disability \t: No" << endl << endl;
+			}
+			cout << "Doctor \t: " << historyCurrent->doctor << endl;
+			cout << "Medicine \t: " << historyCurrent->medicine << endl;
+			cout << "\n\n| 1. Next Patient\t 2.Previous Patient\t 0.Exit Search\t|";
+			cout << "Select your option: ";
+			cin >> option;
+			cin.ignore();
+
+			if (option == 1 && historyCurrent->next != NULL) {
+				historyCurrent = historyCurrent->next;
+			}
+			else if (option == 2 && historyCurrent->next != NULL) {
+				historyCurrent = historyCurrent->previous;
+			}
+			else if (option == 0) {
+				cout << "\nExiting Search...." << endl;
+				system("pause");
+				return;
+			}
+			else if (option != 1 && option != 2 && option != 3){
+				cout << "\nPlease select given option!";
+				system("pause");
+			}
+		}
+	}
+}
+
+void search_waiting() {
+	int decision = 1;
+	string id, name;
+	waitingCurrent = waitingHead;
+	while (decision != 0) {
+		system("cls");
+		int found = 0;
+		cout << "Search options: " << endl;
+		cout << "1. Patient ID " << endl;
+		cout << "2. Patient Name " << endl;
+		cout << "0. Exit Search " << endl;
+		cout << "Please enter your decision: ";
+		cin >> decision;
+		cin.ignore();
+		if (decision == 1) {
+			cout << "\nPlease enter patient ID: ";
+			cin >> id;
+			cin.ignore();
+			while (waitingCurrent != NULL) {
+				if (id == waitingCurrent->patient->id) {
+					display(1);
+					found ++;
+					system("pause");
+				}
+				waitingCurrent = waitingCurrent->next;
+			}
+			if (found == 0) {
+				cout << "Patient does not exist in waiting list" << endl << endl;
+				system("pause");
+			}
+			waitingCurrent = waitingHead;
+		}
+		else if (decision == 2){
+			cout << "\nPlease enter patient name: ";
+			getline(cin, name);
+			while (waitingCurrent != NULL) {
+				string fn = waitingCurrent->patient->firstname;
+				string ln = waitingCurrent->patient->lastname;
+				string fullName = waitingCurrent->patient->firstname + " " + waitingCurrent->patient->lastname;
+				if ((name == fn) || (name == ln) || (name == fullName)) {
+					display(1);
+					found++;
+					system("pause");
+				}
+				waitingCurrent = waitingCurrent->next;
+			}
+			if (found == 0) {
+				cout << "Patient does not exist in waiting list" << endl << endl;
+				system("pause");
+			}
+			waitingCurrent = waitingHead;
+		}
+		else if (decision < 0 || decision >2) {
+			cout << "\nPlease enter given options!" << endl;
+			system("pause");
+		}
+	}
+	system("cls");
+}
+
+void search_history() {
+	int decision = 1;
+	string name, sick;
+	historyCurrent = historyHead;
+	while (decision != 0) {
+		system("cls");
+		int found = 0;
+		cout << "Search options: " << endl;
+		cout << "1. Patient Name " << endl;
+		cout << "2. Patient Sickness " << endl;
+		cout << "0. Exit Search " << endl;
+		cout << "Please enter your decision: ";
+		cin >> decision;
+		cin.ignore();
+		if (decision == 1) {
+			cout << "\nPlease enter patient name: ";
+			getline(cin, name);
+			while (historyCurrent != NULL) {
+				string fn = historyCurrent->patient->firstname;
+				string ln = historyCurrent->patient->lastname;
+				string fullName = historyCurrent->patient->firstname + " " + historyCurrent->patient->lastname;
+				if ((name == fn) || (name == ln) || (name == fullName)) {
+					display(2);
+					found++;
+					system("pause");
+				}
+				historyCurrent = historyCurrent->next;
+			}
+			if (found == 0) {
+				cout << "Patient does not exist in history list" << endl << endl;
+				system("pause");
+			}
+			historyCurrent = historyHead;
+		}
+		else if (decision == 2) {
+			cout << "\nPlease enter patient sickness: ";
+			getline(cin, sick);
+			cout << sick << endl << endl;
+			while (historyCurrent != NULL) {
+				string sickness = historyCurrent->sickness;
+				cout << sickness << endl;
+				if (sick == sickness) {
+					display(3);
+					found++;
+					system("pause");
+				}
+				historyCurrent = historyCurrent->next;
+			}
+			if (found == 0) {
+				cout << "Patient does not exist in history list" << endl << endl;
+				system("pause");
+			}
+			historyCurrent = historyHead;
+		}
+		else if (decision < 0 || decision >2) {
+			cout << "\nPlease enter given options!" << endl;
+			system("pause");
+		}
+	}
+	system("cls");
+}
+
+void update_history() {
+	if (historyHead == NULL) {
+		system("cls");
+		cout << "\n+--------History list is currently empty--------+" << endl;
+		system("pause");
+		return;
+	}
+	int decision = 1;
+	string id;
+	while (decision != 0) {
+		int found = 0;
+		system("cls");
+		historyCurrent = historyHead;
+		cout << "1. Update patient info" << endl;
+		cout << "1. Exit update" << endl;
+		cout << "Enter your decision: ";
+		cin >> decision;
+		cin.ignore();
+		if (decision == 1) {
+			cout << "\nPlease enter patient ID: ";
+			cin >> id;
+			cin.ignore();
+			while (historyCurrent != NULL) {
+				if (id == historyCurrent->patient->id) {
+					int option = 1;
+					while (option != 0) {
+						system("cls");
+						display(2);
+						found++;
+						cout << "\n\nUpdate options: " << endl;
+						cout << "1. Patient doctor " << endl;
+						cout << "2. Patient Sickness " << endl;
+						cout << "3. Patient medicine " << endl;
+						cout << "0. Exit Update " << endl;
+						cout << "Please enter your decision: ";
+						cin >> decision;
+						cin.ignore();
+						if (option == 1) {
+							cout << "\nPlease enter new doctor name: ";
+							cin >> historyCurrent->doctor;
+							cin.ignore();
+							cout << "Update was successful!" << endl;
+							system("pause");
+						}
+						else if (option == 2) {
+							cout << "\nPlease enter new sickness: ";
+							cin >> historyCurrent->sickness;
+							cin.ignore();
+							cout << "Update was successful!" << endl;
+							system("pause");
+						}
+						else if (option == 3) {
+							cout << "\nPlease enter new medicine: ";
+							cin >> historyCurrent->medicine;
+							cin.ignore();
+							cout << "Update was successful!" << endl;
+							system("pause");
+						}
+						else {
+							cout << "\nPlease enter given options!" << endl;
+							system("pause");
+						}
+					}
+				}
+			}
+			if (found == 0) {
+				cout << "Patient does not exist in history list" << endl;
+			}
+			historyCurrent = historyHead;
+		}
+	}
+	system("cls");
+}
+
+void login() {
 	string username = "";
 	string password = "";
+	bool enter = true;
 
-	if (decision == 0)
-	{
-		cout << "Welcome !" << endl;
+	if (user != 0) {
+		username = "";
+		password = "";
+		user = 0;
+		cout << "You are logged out." << endl;
+		system("pause");
+	}
+
+	system("cls");
+	cout << "Welcome to Klinik Sulaiman! Do you wish to log in? (Enter '1' - Yes / '0' - Exit system) : ";
+	cin >> enter;
+	cin.ignore();
+
+	if (!enter) {
+		cout << "Exiting system.....";
+		system("exit");
+	}
+	else {
 		cout << "Enter username : ";
 		getline(cin, username);
 		cout << "Enter password : ";
 		getline(cin, password);
 
-		if (username == "nurse" && password == "nurse123")
-		{
+		if (username == "nurse" && password == "nurse123") {
 			cout << "You are logged in as nurse." << endl;
 			user = 1;
 		}
-		else if (username == "doctor" && password == "doctor123")
-		{
+		else if (username == "doctor" && password == "doctor123") {
 			cout << "You are logged in as doctor." << endl;
 			user = 2;
 		}
-		else
-		{
+		else {
 			cout << "Invalid login details. Exiting system....." << endl;
 		}
-	}
-	else
-	{
-		username = "";
-		password = "";
-		user = 0;
-		cout << "You are logged out. Exiting system.....";
 	}
 }
 
@@ -625,7 +997,7 @@ void MainPage(int user)
 			cout << "2. Change patient order in waiting list according to priority" << endl;
 			cout << "3. View all patients on original waiting list" << endl;
 			cout << "4. Call patient to be treated" << endl;
-			cout << "5. Search for patient on waiting list based on Patient ID or First Name" << endl;
+			cout << "5. Search for patient on waiting list based on Patient ID or Name" << endl;
 			cout << "6. View waiting list in ascending order of visit time" << endl;
 			cout << "0. Logout" << endl;
 			cout << "Enter option (0-6) : ";
@@ -649,23 +1021,23 @@ void MainPage(int user)
 			case 1:
 				InsertintoWaitingList();
 				break;
-				/*case 2:
-					sorting_waiting();
-					break;
-				case 3:
-					display_waiting();
-					break; */
+			/*case 2:
+				sorting_waiting();
+				break; */
+			case 3:
+				display_waiting();
+				break; 
 			case 4:
 				InsertintoPatientList();
 				break;
-				/*	case 5:
-						search_waiting();
-						break;
-					case 6:
-						sorting_waiting();
-						break; */
+			case 5:
+				search_waiting();
+				break;
+				/*	case 6:
+					sorting_waiting();
+					break; */
 			case 0:
-				login(1);
+				login();
 			}
 		}
 		else if (user == 2)
@@ -674,7 +1046,7 @@ void MainPage(int user)
 			cout << "1. View all patients on original waiting list" << endl;
 			cout << "2. Search for patient based on visit history and modify records" << endl;
 			cout << "3. View patient history list in descending order" << endl;
-			cout << "4. Search for patient based on Sickness or First Name" << endl;
+			cout << "4. Search for patient based on Sickness or Name" << endl;
 			cout << "0. Logout" << endl;
 			cout << "Enter option (0-4) : ";
 			cin >> choice;
@@ -692,23 +1064,23 @@ void MainPage(int user)
 				valid = ::find(::begin(doctorChoices), ::end(doctorChoices), choice) != ::end(doctorChoices);
 			}
 
-			/*switch(choice)
+			switch (choice)
 			{
 			case 1:
 				display_waiting();
 				break;
-			case 2:
+				case 2:
 				update_history();
 				break;
-			case 3:
+			/*case 3:
 				sorting_history();
-				break;
+				break;*/
 			case 4:
 				search_history();
 				break;
 			case 0:
-				login(1);
-			}*/
+				login();
+			}
 		}
 	}
 
@@ -717,8 +1089,8 @@ void MainPage(int user)
 int main()
 {
 	HardCode();
-	login(0);
-	if (user != 0)
+	login();
+	while (user != 0)
 		MainPage(user);
 	return 0;
 }
