@@ -328,12 +328,12 @@ void InsertintoWaitingList()
 	string firstname;
 	string lastname;
 	int age;
-	char gender;
+	string gender;
 	string contact;
 	string address;
 	string sickness;
 	bool disability;
-	char validGender[2] = { 'F', 'M' };
+	string validGender[2] = { "Female", "Male" };
 
 	cout << "1 - Register New Patient \n0 - Choose Existing Patient" << endl;
 	cout << "Enter option ('1' or '0') : ";
@@ -371,28 +371,20 @@ void InsertintoWaitingList()
 		}
 		cin.ignore();
 		cout << "Gender ('Female' / 'Male') : ";
-		cin >> gender;
+		getline(cin, gender);
 		valid = ::find(::begin(validGender), ::end(validGender), gender) != ::end(validGender);
 		while (!valid)
 		{
-			cin.clear();
-			cin.ignore(256, '\n');
 			cout << "Invalid input! Enter gender again : ";
-			cin >> gender;
-			cin.ignore();
+			getline(cin, gender);
 			valid = ::find(::begin(validGender), ::end(validGender), gender) != ::end(validGender);
 		}
-		cin.ignore();
 		cout << "Contact : ";
 		getline(cin, contact);
 		while (!::all_of(begin(contact), end(contact), std::isdigit))
 		{
-			cin.clear();
-			cin.ignore(256, '\n');
 			cout << "Invalid input! Enter input again : ";
 			getline(cin, contact);
-			cin.ignore();
-			::all_of(begin(contact), end(contact), std::isdigit);
 		}
 		cout << "Address : ";
 		getline(cin, address);
