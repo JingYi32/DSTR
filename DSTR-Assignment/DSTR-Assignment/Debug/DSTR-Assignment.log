@@ -1,1 +1,13 @@
-﻿  DSTR-Assignment.vcxproj -> C:\Users\jingy\Documents\GitHub\DSTR\DSTR-Assignment\Debug\DSTR-Assignment.exe
+﻿  dstr-assignment.cpp
+C:\Users\Sydne\OneDrive - Asia Pacific University\Documents\GitHub\DSTR\dstr-assignment\DSTR-Assignment\dstr-assignment.cpp(317,6): warning C4101: 'order': unreferenced local variable
+C:\Users\Sydne\OneDrive - Asia Pacific University\Documents\GitHub\DSTR\dstr-assignment\DSTR-Assignment\dstr-assignment.cpp(1030,39): warning C4244: 'argument': conversion from 'time_t' to 'const _Elem', possible loss of data
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\Sydne\OneDrive - Asia Pacific University\Documents\GitHub\DSTR\dstr-assignment\DSTR-Assignment\dstr-assignment.cpp(1046,45): warning C4244: 'argument': conversion from 'time_t' to 'const _Elem', possible loss of data
+          with
+          [
+              _Elem=char
+          ]
+  DSTR-Assignment.vcxproj -> C:\Users\Sydne\OneDrive - Asia Pacific University\Documents\GitHub\DSTR\dstr-assignment\Debug\DSTR-Assignment.exe

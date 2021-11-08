@@ -310,15 +310,6 @@ void HardCode() {
 	addtoHistory();
 }
 
-void validate(string input) {
-	while (!::all_of(begin(input), end(input), std::isalpha))
-	{
-		cout << "Invalid input! Enter input again : ";
-		getline(cin, input);
-		::all_of(begin(input), end(input), std::isalpha);
-	}
-}
-
 void InsertintoWaitingList()
 {
 	system("cls");
@@ -335,6 +326,7 @@ void InsertintoWaitingList()
 	bool disability;
 	string validGender[2] = { "Female", "Male" };
 
+	//choose add new patient or select existing patient from hardcode
 	cout << "1 - Register New Patient \n0 - Choose Existing Patient" << endl;
 	cout << "Enter option ('1' or '0') : ";
 	cin >> add;
@@ -347,8 +339,10 @@ void InsertintoWaitingList()
 	}
 	cin.ignore();
 
+	//register new patient
 	if (add)
 	{
+		//regulate id generation (4 digits)
 		::stringstream oss;
 		oss << ::setw(4) << ::setfill('0') << total;
 		::string s = oss.str();
@@ -356,10 +350,8 @@ void InsertintoWaitingList()
 		cout << "ID : " << id << endl;
 		cout << "First Name : ";
 		getline(cin, firstname);
-		validate(firstname);
 		cout << "Last Name : ";
 		getline(cin, lastname);
-		validate(lastname);
 		cout << "Age : ";
 		cin >> age;
 		while (cin.fail())
@@ -434,6 +426,7 @@ void InsertintoWaitingList()
 	}
 	else
 	{
+		//select existing patient
 		patientCurrent = patientHead;
 		int select = 1;
 		while (select != 0)
@@ -501,6 +494,7 @@ void InsertintoWaitingList()
 			else if (select == 2 && patientCurrent->previous == NULL)
 			{
 				cout << "This is the first patient in the list!" << endl;
+				system("pause");
 			}
 			else
 			{
@@ -510,19 +504,19 @@ void InsertintoWaitingList()
 		}
 	}
 
-	system("pause");
 	system("cls");
 }
 
+//adding patient history after appointment
 void InsertintoPatientList()
 {
 	string doctor;
 	string medicine;
 
 	system("cls");
+	cout << "Patient name : " << waitHead->patient->firstname << " " << waitHead->patient->lastname << endl;
 	cout << "Enter doctor name : ";
 	getline(cin, doctor);
-	validate(doctor);
 	cout << "Enter medicine name : ";
 	getline(cin, medicine);
 	timeArrived = time(0);
@@ -538,18 +532,7 @@ void InsertintoPatientList()
 	historyNewNode->sortItem = waitHead->sortItem;
 	historyNewNode->next = NULL;
 	historyNewNode->previous = NULL;
-
-	//history linked list
-	if (historyHead == NULL)
-	{
-		historyHead = historyTail = historyNewNode;
-	}
-	else
-	{
-		historyTail->next = historyNewNode;
-		historyNewNode->previous = historyTail;
-		historyTail = historyNewNode;
-	}
+	addtoHistory();
 
 	//removing waiting list head
 	waitCurrent = waitHead;
@@ -1540,13 +1523,12 @@ void MainPage(int user)
 
 			valid = ::find(::begin(nurseChoices), ::end(nurseChoices), choice) != ::end(nurseChoices);
 
-			while (!valid)
+			while (!valid || cin.fail())
 			{
 				cin.clear();
 				cin.ignore(256, '\n');
 				cout << "Enter option (0-6) : ";
 				cin >> choice;
-				cin.ignore();
 				valid = ::find(::begin(nurseChoices), ::end(nurseChoices), choice) != ::end(nurseChoices);
 			}
 
@@ -1572,6 +1554,7 @@ void MainPage(int user)
 				break;
 			case 0:
 				login();
+				break;
 			}
 		}
 		else if (user == 2)
@@ -1588,13 +1571,12 @@ void MainPage(int user)
 
 			valid = ::find(::begin(doctorChoices), ::end(doctorChoices), choice) != ::end(doctorChoices);
 
-			while (!valid)
+			while (!valid || cin.fail())
 			{
 				cin.clear();
 				cin.ignore(256, '\n');
 				cout << "Enter option (0-4) : ";
 				cin >> choice;
-				cin.ignore();
 				valid = ::find(::begin(doctorChoices), ::end(doctorChoices), choice) != ::end(doctorChoices);
 			}
 
@@ -1614,6 +1596,7 @@ void MainPage(int user)
 				break;
 			case 0:
 				login();
+				break;
 			}
 		}
 	}
