@@ -199,7 +199,7 @@ void HardCode() {
 	waitNewNode->timeArrived = 1636446600;
 	waitNewNode->sickness = "Head Pain";
 	waitNewNode->disability = false;
-	waitNewNode->medicine = "Kaopectate";
+	waitNewNode->medicine = "";
 	waitNewNode->sortItem = "";
 	waitNewNode->next = NULL;
 	matchtoPatient("P0001");
@@ -890,7 +890,6 @@ void searchHistory() {
 			cout << sick << endl << endl;
 			while (historyCurrent != NULL) {
 				string sickness = historyCurrent->sickness;
-				cout << sickness << endl;
 				if (sick == sickness) {
 					display(2, num);
 					found++;
@@ -1173,6 +1172,7 @@ void pastingData(int sortdecision2) {
 			}
 			else if (historyNewNode->sortItem < historySortHead->sortItem) {
 				historyNewNode->next = historySortHead;
+				historySortHead->previous = historyNewNode;
 				historySortHead = historyNewNode;
 			}
 			else if (historyNewNode->sortItem > historySortTail->sortItem) {
@@ -1330,7 +1330,14 @@ void DisplayByPage() {
 			cout << "Patient Firstname\t: " << waitCurrent->patient->firstname << endl;
 			cout << "Patient Lastname\t: " << waitCurrent->patient->lastname << endl;
 			cout << "Sickness\t\t: " << waitCurrent->sickness << endl;
-			cout << "Disability\t\t: " << waitCurrent->disability << endl << endl;
+			cout << "Disability\t\t: ";
+			if (waitCurrent->disability) {
+				cout << "True";
+			}
+			else {
+				cout << "False";
+			}
+			cout << endl << endl;
 
 			cout << "1. Next Patient\n2. Previous Patient\n3. Exit Display" << endl;
 			cout << "Enter the selection\t:";
@@ -1378,7 +1385,14 @@ void DisplayByPage() {
 			cout << "Time Visited\t\t: " << datetime << endl;
 			cout << "Doctor\t\t\t: " << historyCurrent->doctor << endl;
 			cout << "Sickness\t\t: " << historyCurrent->sickness << endl;
-			cout << "Disability\t\t: " << historyCurrent->disability << endl;
+			cout << "Disability\t\t: ";
+			if (waitCurrent->disability) {
+				cout << "True";
+			}
+			else {
+				cout << "False";
+			}
+			cout << endl;
 			cout << "Medicine\t\t: " << historyCurrent->medicine << endl << endl;
 			cout << "1. Next Patient\n2. Previous Patient\n3. Exit Display" << endl;
 			cout << "Enter the selection\t:";
