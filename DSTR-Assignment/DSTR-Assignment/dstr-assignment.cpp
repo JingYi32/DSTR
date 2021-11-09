@@ -984,6 +984,7 @@ void updateHistory() {
 			}
 			if (found == 0) {
 				cout << "Patient does not exist in history list" << endl;
+				system("pause");
 			}
 			historyCurrent = historyHead;
 		}
@@ -1627,7 +1628,7 @@ void MainPage(int user)
 		{
 			cout << "Currently logged in as : Doctor " << endl;
 			cout << "1. View all patients on original waiting list" << endl;
-			cout << "2. Search for patient based on visit history and modify records" << endl;
+			cout << "2. Search for patient in history list and modify records" << endl;
 			cout << "3. Sort history list" << endl;
 			cout << "4. Search for patient based on Sickness or Name" << endl;
 			cout << "0. Logout" << endl;

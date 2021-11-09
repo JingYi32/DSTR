@@ -2,7 +2,11 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+<<<<<<< HEAD
       <FullPath>C:\Users\jingy\Documents\GitHub\DSTR\dstr-assignment\Debug\DSTR-Assignment.exe</FullPath>
+=======
+      <FullPath>C:\Users\NEW HP\Documents\Visual Studio 2019\DSTR Assignment\DSTR-Assignment\Debug\DSTR-Assignment.exe</FullPath>
+>>>>>>> 48ee67a5b09b57be7f3fb5f5ad364234f0adeb0b
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
