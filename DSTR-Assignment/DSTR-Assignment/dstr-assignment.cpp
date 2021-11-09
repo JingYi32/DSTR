@@ -173,7 +173,19 @@ void HardCode() {
 	patientNewNode->age = 14;
 	patientNewNode->gender = "Female";
 	patientNewNode->contact = "060123153789";
-	patientNewNode->address = "16, Jalan Bunga, Taman Bunga, 48793 Malaysia";
+	patientNewNode->address = "27, Jalan Bunga, Taman Bunga, 48793 Malaysia";
+	patientNewNode->next = NULL;
+	patientNewNode->previous = NULL;
+	addtoPatient();
+
+	patientNewNode = new Patient;
+	patientNewNode->id = "P0005";
+	patientNewNode->firstname = "Shia";
+	patientNewNode->lastname = "Lim";
+	patientNewNode->age = 28;
+	patientNewNode->gender = "Male";
+	patientNewNode->contact = "060123145789";
+	patientNewNode->address = "36, Jalan Bunga, Taman Bunga, 48793 Malaysia";
 	patientNewNode->next = NULL;
 	patientNewNode->previous = NULL;
 	addtoPatient();
@@ -184,8 +196,8 @@ void HardCode() {
 	waitNewNode = new Waiting;
 	waitNewNode->order = 1;
 	waitNewNode->doctor = "";
-	waitNewNode->timeArrived = 1620021717;
-	waitNewNode->sickness = "Vomit";
+	waitNewNode->timeArrived = 1636446600;
+	waitNewNode->sickness = "Head Pain";
 	waitNewNode->disability = false;
 	waitNewNode->medicine = "Kaopectate";
 	waitNewNode->sortItem = "";
@@ -196,8 +208,8 @@ void HardCode() {
 	waitNewNode = new Waiting;
 	waitNewNode->order = 2;
 	waitNewNode->doctor = "";
-	waitNewNode->timeArrived = 1620022347;
-	waitNewNode->sickness = "Head Pain";
+	waitNewNode->timeArrived = 1636446900;
+	waitNewNode->sickness = "Vomit";
 	waitNewNode->disability = false;
 	waitNewNode->medicine = "";
 	waitNewNode->sortItem = "";
@@ -208,9 +220,9 @@ void HardCode() {
 	waitNewNode = new Waiting;
 	waitNewNode->order = 3;
 	waitNewNode->doctor = "";
-	waitNewNode->timeArrived = 1620026537;
-	waitNewNode->sickness = "Stomach Pain";
-	waitNewNode->disability = false;
+	waitNewNode->timeArrived = 1636447320;
+	waitNewNode->sickness = "Head Pain";
+	waitNewNode->disability = true;
 	waitNewNode->medicine = "";
 	waitNewNode->sortItem = "";
 	waitNewNode->next = NULL;
@@ -220,9 +232,9 @@ void HardCode() {
 	waitNewNode = new Waiting;
 	waitNewNode->order = 4;
 	waitNewNode->doctor = "";
-	waitNewNode->timeArrived = 1620027527;
-	waitNewNode->sickness = "Cough";
-	waitNewNode->disability = true;
+	waitNewNode->timeArrived = 1636447800;
+	waitNewNode->sickness = "Fever";
+	waitNewNode->disability = false;
 	waitNewNode->medicine = "";
 	waitNewNode->sortItem = "";
 	waitNewNode->next = NULL;
@@ -232,8 +244,8 @@ void HardCode() {
 	waitNewNode = new Waiting;
 	waitNewNode->order = 5;
 	waitNewNode->doctor = "";
-	waitNewNode->timeArrived = 1620108117;
-	waitNewNode->sickness = "Vomit";
+	waitNewNode->timeArrived = 1636448280;
+	waitNewNode->sickness = "Fever";
 	waitNewNode->disability = false;
 	waitNewNode->medicine = "";
 	waitNewNode->sortItem = "";
@@ -241,26 +253,27 @@ void HardCode() {
 	matchtoPatient("P0002");
 	addtoWaiting();
 
+
 	//Hard Code of History List Record
 	::typedetail = 2;
 	historyHead = historyCurrent = NULL;
 	historyNewNode = new History;
 	historyNewNode->id = "H0001";
 	historyNewNode->doctor = "Dr. Tan";
-	historyNewNode->timeVisited = 1620023517;
+	historyNewNode->timeVisited = 1636156982;
 	historyNewNode->sickness = "Vomit";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "Kaopectate";
 	historyNewNode->sortItem = "";
 	historyNewNode->next = NULL;
 	historyNewNode->previous = NULL;
-	matchtoPatient("P0001");
+	matchtoPatient("P0004");
 	addtoHistory();
 
 	historyNewNode = new History;
 	historyNewNode->id = "H0002";
 	historyNewNode->doctor = "Dr. Wong";
-	historyNewNode->timeVisited = 1620024147;
+	historyNewNode->timeVisited = 1636159524;
 	historyNewNode->sickness = "Head Pain";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "Panadol";
@@ -273,7 +286,7 @@ void HardCode() {
 	historyNewNode = new History;
 	historyNewNode->id = "H0003";
 	historyNewNode->doctor = "Dr. Tan";
-	historyNewNode->timeVisited = 1620028337;
+	historyNewNode->timeVisited = 1636164754;
 	historyNewNode->sickness = "Stomach Pain";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "Pepto-Bismol";
@@ -286,27 +299,66 @@ void HardCode() {
 	historyNewNode = new History;
 	historyNewNode->id = "H0004";
 	historyNewNode->doctor = "Dr. Wong";
-	historyNewNode->timeVisited = 1620029327;
+	historyNewNode->timeVisited = 1636172926;
 	historyNewNode->sickness = "Cough";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "Cough Syrup";
 	historyNewNode->sortItem = "";
 	historyNewNode->next = NULL;
 	historyNewNode->previous = NULL;
-	matchtoPatient("P0004");
+	matchtoPatient("P0005");
 	addtoHistory();
 
 	historyNewNode = new History;
 	historyNewNode->id = "H0005";
 	historyNewNode->doctor = "Dr. Tan";
-	historyNewNode->timeVisited = 1620109917;
+	historyNewNode->timeVisited = 1636191824;
 	historyNewNode->sickness = "Vomit";
 	historyNewNode->disability = false;
 	historyNewNode->medicine = "Kaopectate";
 	historyNewNode->sortItem = "";
 	historyNewNode->next = NULL;
 	historyNewNode->previous = NULL;
+	matchtoPatient("P0001");
+	addtoHistory();
+
+	historyNewNode = new History;
+	historyNewNode->id = "H0006";
+	historyNewNode->doctor = "Dr. Ahmad";
+	historyNewNode->timeVisited = 1636417424;
+	historyNewNode->sickness = "Cough";
+	historyNewNode->disability = true;
+	historyNewNode->medicine = "Cough Syrup";
+	historyNewNode->sortItem = "";
+	historyNewNode->next = NULL;
+	historyNewNode->previous = NULL;
 	matchtoPatient("P0002");
+	addtoHistory();
+
+	historyNewNode = new History;
+	historyNewNode->id = "H0007";
+	historyNewNode->doctor = "Dr. Tan";
+	historyNewNode->timeVisited = 1636433012;
+	historyNewNode->sickness = "Fever";
+	historyNewNode->disability = false;
+	historyNewNode->medicine = "Panadol with Optizorb";
+	historyNewNode->sortItem = "";
+	historyNewNode->next = NULL;
+	historyNewNode->previous = NULL;
+	matchtoPatient("P0005");
+	addtoHistory();
+
+	historyNewNode = new History;
+	historyNewNode->id = "H0008";
+	historyNewNode->doctor = "Dr. Ahmad";
+	historyNewNode->timeVisited = 1636443803;
+	historyNewNode->sickness = "Vomit";
+	historyNewNode->disability = false;
+	historyNewNode->medicine = "Kaopectate";
+	historyNewNode->sortItem = "";
+	historyNewNode->next = NULL;
+	historyNewNode->previous = NULL;
+	matchtoPatient("P0003");
 	addtoHistory();
 }
 
