@@ -66,6 +66,9 @@ void addtoPatient()
 		patientTail = patientNewNode;
 		patientCurrent = patientHead;
 	}
+
+	//id generation
+	total++;
 }
 
 void matchtoPatient(string PatientID) {
@@ -1066,6 +1069,7 @@ void changePriority() {
 
 //Sorting Function
 void setSortingItem(int sortdecision1) {
+	//Waiting List
 	if (user == 1) {
 		waitNewNode->sortItem.clear();
 
@@ -1082,6 +1086,7 @@ void setSortingItem(int sortdecision1) {
 			waitNewNode->sortItem = waitNewNode->timeArrived;
 		}
 	}
+	//History List
 	else {
 		historyNewNode->sortItem.clear();
 
@@ -1221,11 +1226,11 @@ void pastingData(int sortdecision2) {
 			}
 		}
 	}
-
 	return;
 }
 
 void CreateSortedList(int sortdecision1, int sortdecision2) {
+	//Waiting List
 	if (user == 1) {
 		waitNewNode = new Waiting;
 		waitNewNode->order = waitCurrent->order;
@@ -1238,6 +1243,7 @@ void CreateSortedList(int sortdecision1, int sortdecision2) {
 		waitNewNode->sortItem = waitCurrent->sortItem;
 		waitNewNode->next = NULL;
 	}
+	//History List
 	else {
 		historyNewNode = new History;
 		historyNewNode->id = historyCurrent->id;
