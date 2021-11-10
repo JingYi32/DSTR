@@ -541,7 +541,7 @@ void InsertintoWaitingList()
 				waitNewNode->next = NULL;
 				addtoWaiting();
 			}
-			else if (select != 1 && select != 2 && select != 0)
+			else if (select != 1 && select != 2 && select != 0 || cin.fail())
 			{
 				cout << "Invalid option!" << endl;
 				system("pause");
