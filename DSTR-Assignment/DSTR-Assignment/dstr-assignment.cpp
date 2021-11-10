@@ -9,6 +9,7 @@ using namespace std;
 
 int user = 0;
 int total = 1;
+int hist_total = 1;
 time_t timeArrived;
 unsigned int size = 26;
 char str[80];
@@ -127,6 +128,9 @@ void addtoHistory() {
 		historyTail = historyNewNode;
 		historyCurrent = historyHead;
 	}
+
+	//id generation
+	::hist_total++;
 }
 
 void HardCode() {
@@ -541,7 +545,7 @@ void InsertintoWaitingList()
 				waitNewNode->next = NULL;
 				addtoWaiting();
 			}
-			else if (select != 1 && select != 2 && select != 0 || cin.fail())
+			else if (cin.fail() || (select != 1 && select != 2 && select != 0))
 			{
 				cout << "Invalid option!" << endl;
 				system("pause");
@@ -568,6 +572,10 @@ void InsertintoPatientList()
 	string doctor;
 	string medicine;
 
+	::stringstream oss;
+	oss << ::setw(4) << ::setfill('0') << hist_total;
+	::string s = oss.str();
+	string id = "H" + s;
 	system("cls");
 	cout << "Patient name : " << waitHead->patient->firstname << " " << waitHead->patient->lastname << endl;
 	cout << "Enter doctor name : ";
@@ -577,7 +585,7 @@ void InsertintoPatientList()
 	timeArrived = time(0);
 
 	historyNewNode = new History;
-	historyNewNode->id = waitHead->patient->id;
+	historyNewNode->id = id;
 	historyNewNode->patient = waitHead->patient;
 	historyNewNode->doctor = doctor;
 	historyNewNode->timeVisited = timeArrived;
